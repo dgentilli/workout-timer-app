@@ -1,5 +1,5 @@
 // Controllers/UserController.js
-const UserRepository = require('../temp_repositories/UserRepositories.js');
+const UserRepository = require('../be-repositories/UserRepositories.js');
 
 class UserController {
   async createUser(req, res) {
