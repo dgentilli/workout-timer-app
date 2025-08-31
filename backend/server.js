@@ -1,5 +1,6 @@
 // server.js
 const express = require('express');
+require('dotenv').config();
 const mongoose = require('mongoose');
 const userRoutes = require('./Routes/userRoutes');
 
@@ -7,8 +8,9 @@ const app = express();
 app.use(express.json());
 
 // Connect to MongoDB (replace URI with your own)
+const dbURI = process.env.mongoURI;
 mongoose
-  .connect('mongodb://127.0.0.1:27017/workoutApp', {
+  .connect(dbURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

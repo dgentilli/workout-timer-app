@@ -6,7 +6,7 @@
  */
 
 // models/User.js
-export default class User {
+class User {
   constructor({ id, firstName, lastName, email, hasAdminPrivileges = false }) {
     this.id = id;
     this.firstName = firstName;
@@ -19,3 +19,5 @@ export default class User {
     return `${this.firstName} ${this.lastName}`;
   }
 }
+
+module.exports = User;

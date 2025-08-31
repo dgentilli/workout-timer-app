@@ -1,5 +1,5 @@
 // Controllers/UserController.js
-const UserRepository = require('../Repositories/UserRepository');
+const UserRepository = require('../Repositories/UserRepositories.js');
 
 class UserController {
   async createUser(req, res) {
