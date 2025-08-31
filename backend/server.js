@@ -1,13 +1,17 @@
 // server.js
 const express = require('express');
+const bodyParser = require('body-parser');
 require('dotenv').config();
 const mongoose = require('mongoose');
 const userRoutes = require('./Routes/userRoutes');
 
 const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+// Routes
 app.use(express.json());
+app.use('/api/users', userRoutes);
 
-// Connect to MongoDB (replace URI with your own)
 const dbURI = process.env.mongoURI;
 mongoose
   .connect(dbURI, {
@@ -16,9 +20,6 @@ mongoose
   })
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.error(err));
-
-// Routes
-app.use('/api/users', userRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;

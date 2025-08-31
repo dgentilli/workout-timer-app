@@ -6,7 +6,7 @@ const User = require('../Models/User');
 const userSchema = new mongoose.Schema(
   {
     firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
+    lastName: { type: String, required: false },
     email: { type: String, required: true, unique: true },
     hasAdminPrivileges: { type: Boolean, default: false },
   },
