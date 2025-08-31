@@ -1,6 +1,6 @@
 // Repositories/UserRepository.js
 const mongoose = require('mongoose');
-const User = require('../Models/User');
+const User = require('../temp_models/User');
 
 // Mongoose schema
 const userSchema = new mongoose.Schema(
