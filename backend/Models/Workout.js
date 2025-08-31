@@ -13,5 +13,10 @@
  */
 
 export default class Workout {
-  // workout stuff here
+  constructor(id = '', name = '', restInterval = 0, exercises = []) {
+    this.id = id;
+    this.name = name;
+    this.restInterval = restInterval;
+    this.exercises = exercises;
+  }
 }

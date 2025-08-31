@@ -5,29 +5,17 @@
  * @property {Array} workouts - Workout[]
  */
 
+// models/User.js
 export default class User {
-  constructor(email, workouts) {
+  constructor({ id, firstName, lastName, email, hasAdminPrivileges = false }) {
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.email = email;
-    this.workouts = workouts;
-    /** For starters we'll keep the user class simple
-     * because I intend this for personal use only, so
-     * I don't want to spend a lot of time building out auth.
-     */
+    this.hasAdminPrivileges = hasAdminPrivileges;
   }
 
-  getEmail() {
-    return this.email;
-  }
-
-  setEmail(newEmail) {
-    this.email = newEmail;
-  }
-
-  getWorkouts() {
-    return this.workouts;
-  }
-
-  setWorkouts(updatedWorkouts) {
-    this.workouts = updatedWorkouts;
+  getFullName() {
+    return `${this.firstName} ${this.lastName}`;
   }
 }
