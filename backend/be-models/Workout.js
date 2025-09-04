@@ -4,6 +4,7 @@
  * @property {string} id - Unique workout identifier
  * @property {string} name - Workout name
  * @property {number} restInterval - rest interval between exercises
+ * @property {string} userId - the user with which the workout is associated
  */
 
 /**
@@ -12,11 +13,14 @@
  * @property {number} duration - duration in seconds
  */
 
-export default class Workout {
-  constructor(id = '', name = '', restInterval = 0, exercises = []) {
+class Workout {
+  constructor(id = '', name = '', restInterval = 0, exercises = [], userId) {
     this.id = id;
     this.name = name;
     this.restInterval = restInterval;
     this.exercises = exercises;
+    this.userId = userId;
   }
 }
+
+module.exports = Workout;

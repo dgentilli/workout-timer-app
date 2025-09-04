@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 const mongoose = require('mongoose');
 const userRoutes = require('./be-routes/userRoutes');
+const workoutRoutes = require('./be-routes/workoutRoutes');
 
 const app = express();
 app.use(bodyParser.json());
@@ -11,6 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Routes
 app.use(express.json());
 app.use('/api/users', userRoutes);
+app.use('/api/workouts', workoutRoutes);
 
 const dbURI = process.env.mongoURI;
 mongoose
