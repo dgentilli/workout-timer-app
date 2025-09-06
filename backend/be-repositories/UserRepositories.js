@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema(
     firstName: { type: String, required: true },
     lastName: { type: String, required: false },
     email: { type: String, required: true, unique: true },
-    hasAdminPrivileges: { type: Boolean, default: false },
+    workouts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Workout' }],
   },
   { timestamps: true }
 );
@@ -22,9 +22,14 @@ class UserRepository {
   }
 
   async findById(id) {
-    const userDoc = await UserModel.findById(id);
+    const userDoc = await UserModel.findById(id).populate('workouts');
     if (!userDoc) return null;
-    return new User({ id: userDoc._id, ...userDoc.toObject() });
+    return new User({
+      id: userDoc._id.toString(),
+      name: userDoc.name,
+      email: userDoc.email,
+      workouts: userDoc.workouts,
+    });
   }
 
   async findAll() {
