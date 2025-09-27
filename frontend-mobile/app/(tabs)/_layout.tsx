@@ -18,12 +18,6 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name='HomeScreen'
-        options={{
-          title: 'Home!',
-        }}
-      />
-      <Tabs.Screen
         name='index'
         options={{
           title: 'Home',
@@ -33,11 +27,11 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name='explore'
+        name='workouts'
         options={{
-          title: 'Explore',
+          title: 'Workouts',
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name='paperplane.fill' color={color} />
+            <IconSymbol size={28} name='house.badge.wifi' color={color} />
           ),
         }}
       />
