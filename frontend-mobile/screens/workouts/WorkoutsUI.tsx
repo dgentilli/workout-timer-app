@@ -1,26 +1,24 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
-const createStyles = () => {
-  return StyleSheet.create({
-    wrapper: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    titleText: {
-      textAlign: 'center',
-      color: 'orange',
-      fontSize: 24,
-    },
-  });
-};
+import Button from '@/components/ui/button';
+import ScreenWrapper from '@/components/ui/screen-wrapper-basic';
+import StatusDisplay from '@/components/ui/status-display';
 
 const WorkoutsUI = () => {
-  const styles = createStyles();
   return (
-    <View style={styles.wrapper}>
-      <Text style={styles.titleText}>Workouts Screen</Text>
-    </View>
+    <ScreenWrapper title='Workouts'>
+      <StatusDisplay
+        title='Nothing to Display'
+        subtitle='Get Started by Creating a Workout'
+        button={
+          <Button
+            title='Create Workout'
+            onPress={() => console.log('pressed')}
+          />
+        }
+        icon={<MaterialIcons name='directions-run' size={76} color='#e3a144' />}
+      />
+    </ScreenWrapper>
   );
 };
 
