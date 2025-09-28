@@ -3,8 +3,13 @@ import { MaterialIcons } from '@expo/vector-icons';
 import Button from '@/components/ui/button';
 import ScreenWrapper from '@/components/ui/screen-wrapper-basic';
 import StatusDisplay from '@/components/ui/status-display';
+import { themes } from '@/themes/main';
 
 const WorkoutsUI = () => {
+  const buildVariant = 'main';
+  const theme = themes[buildVariant];
+  const colorScheme = 'light';
+  const { colors } = theme;
   return (
     <ScreenWrapper title='Workouts'>
       <StatusDisplay
@@ -16,7 +21,13 @@ const WorkoutsUI = () => {
             onPress={() => console.log('pressed')}
           />
         }
-        icon={<MaterialIcons name='directions-run' size={76} color='#e3a144' />}
+        icon={
+          <MaterialIcons
+            name='directions-run'
+            size={76}
+            color={colors[colorScheme]['accent']}
+          />
+        }
       />
     </ScreenWrapper>
   );

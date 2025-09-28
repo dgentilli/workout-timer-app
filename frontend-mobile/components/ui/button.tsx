@@ -1,3 +1,4 @@
+import { ColorScheme, Theme, themes } from '@/themes/main';
 import React from 'react';
 import { Pressable, Text, View, StyleSheet } from 'react-native';
 
@@ -12,24 +13,27 @@ interface ButtonProps {
 }
 
 const createStyles = (
+  theme: Theme,
+  colorScheme: ColorScheme,
   variant: 'primary' | 'secondary',
   size?: { height?: number; width?: number },
   fullWidth?: boolean,
   disabled?: boolean
 ) => {
   const isPrimary = variant === 'primary';
+  const { colors, spacing, typography, borderRadius } = theme;
 
   return StyleSheet.create({
     button: {
-      height: size?.height || 48,
+      height: size?.height || spacing.xxl,
       width: fullWidth ? '100%' : size?.width || 'auto',
-      borderRadius: 8,
-      backgroundColor: isPrimary ? '#007AFF' : 'transparent',
+      borderRadius: borderRadius.md,
+      backgroundColor: colors[colorScheme]['primary'],
       borderWidth: isPrimary ? 0 : 1,
       borderColor: '#007AFF',
       justifyContent: 'center',
       alignItems: 'center',
-      paddingHorizontal: 24,
+      paddingHorizontal: spacing.lg,
       opacity: disabled ? 0.5 : 1,
     },
     content: {
@@ -37,12 +41,11 @@ const createStyles = (
       alignItems: 'center',
     },
     text: {
-      fontSize: 18,
-      fontWeight: '600',
-      color: isPrimary ? '#FFFFFF' : '#007AFF',
+      ...typography.body,
+      color: colors[colorScheme]['surface'],
     },
     iconContainer: {
-      marginRight: 8,
+      marginRight: spacing.sm,
     },
   });
 };
@@ -58,7 +61,18 @@ const Button = ({
   disabled = false,
   icon,
 }: ButtonProps) => {
-  const styles: Styles = createStyles(variant, size, fullWidth, disabled);
+  const buildVariant = 'main';
+  const theme = themes[buildVariant];
+  const colorScheme = 'light';
+  const styles: Styles = createStyles(
+    //@ts-ignore
+    theme,
+    colorScheme,
+    variant,
+    size,
+    fullWidth,
+    disabled
+  );
 
   const handlePress = () => {
     if (!disabled) {

@@ -1,3 +1,4 @@
+import { ColorScheme, Theme, themes } from '@/themes/main';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
@@ -8,7 +9,9 @@ interface StatusDisplayProps {
   button?: React.ReactNode;
 }
 
-const createStyles = () => {
+const createStyles = (theme: Theme, colorScheme: ColorScheme) => {
+  const { colors, spacing, typography } = theme;
+
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -16,24 +19,22 @@ const createStyles = () => {
       alignItems: 'center',
     },
     iconContainer: {
-      marginBottom: 24,
+      marginBottom: spacing.lg,
     },
     title: {
-      fontSize: 24,
-      fontWeight: '600',
+      ...typography.heading,
       textAlign: 'center',
-      color: '#1a1a1a',
-      marginBottom: 8,
+      color: colors[colorScheme]['text']['primary'],
+      marginBottom: spacing.md,
     },
     subtitle: {
-      fontSize: 16,
-      textAlign: 'center',
-      color: '#666666',
+      ...typography.body,
+      color: colors[colorScheme]['text']['secondary'],
       lineHeight: 20,
-      marginBottom: 24,
+      marginBottom: spacing.lg,
     },
     buttonContainer: {
-      marginTop: 16,
+      marginTop: spacing.md,
     },
   });
 };
@@ -46,7 +47,11 @@ const StatusDisplay = ({
   icon,
   button,
 }: StatusDisplayProps) => {
-  const styles: Styles = createStyles();
+  const buildVariant = 'main';
+  const theme = themes[buildVariant];
+  const colorScheme = 'light';
+  //@ts-ignore
+  const styles: Styles = createStyles(theme, colorScheme);
 
   return (
     <View style={styles.container}>
