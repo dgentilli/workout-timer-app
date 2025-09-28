@@ -1,6 +1,7 @@
 import { ColorScheme, Theme, themes } from '@/themes/main';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { useColorScheme } from '@/hooks/use-color-scheme';
 
 interface StatusDisplayProps {
   title: string;
@@ -49,7 +50,7 @@ const StatusDisplay = ({
 }: StatusDisplayProps) => {
   const buildVariant = 'main';
   const theme = themes[buildVariant];
-  const colorScheme = 'light';
+  const { colorScheme } = useColorScheme();
   //@ts-ignore
   const styles: Styles = createStyles(theme, colorScheme);
 

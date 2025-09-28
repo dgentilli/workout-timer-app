@@ -2,6 +2,7 @@ import { ColorScheme, Theme, themes } from '@/themes/main';
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useColorScheme } from '@/hooks/use-color-scheme';
 
 interface ScreenWrapperProps {
   title: string;
@@ -32,7 +33,7 @@ const createStyles = (theme: Theme, colorScheme: ColorScheme) => {
 const ScreenWrapper = ({ title, children }: ScreenWrapperProps) => {
   const buildVariant = 'main';
   const theme = themes[buildVariant];
-  const colorScheme = 'light';
+  const { colorScheme } = useColorScheme();
   //@ts-ignore
   const styles = createStyles(theme, colorScheme);
   return (
