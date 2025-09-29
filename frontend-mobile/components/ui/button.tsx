@@ -2,7 +2,7 @@ import { ColorScheme, Theme, themes } from '@/themes/main';
 import React from 'react';
 import { Pressable, Text, View, StyleSheet } from 'react-native';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-
+import { BUILD_VARIANT } from '@/config/buildVariant';
 interface ButtonProps {
   title: string;
   onPress: () => void;
@@ -62,8 +62,7 @@ const Button = ({
   disabled = false,
   icon,
 }: ButtonProps) => {
-  const buildVariant = 'main';
-  const theme = themes[buildVariant];
+  const theme = themes[BUILD_VARIANT as keyof typeof themes];
   const { colorScheme } = useColorScheme();
   const styles: Styles = createStyles(
     //@ts-ignore

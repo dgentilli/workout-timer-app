@@ -5,10 +5,10 @@ import ScreenWrapper from '@/components/ui/screen-wrapper-basic';
 import StatusDisplay from '@/components/ui/status-display';
 import { themes } from '@/themes/main';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { BUILD_VARIANT } from '@/config/buildVariant';
 
 const WorkoutsUI = () => {
-  const buildVariant = 'main';
-  const theme = themes[buildVariant];
+  const theme = themes[BUILD_VARIANT as keyof typeof themes];
   const { colorScheme } = useColorScheme();
 
   const { colors } = theme;
