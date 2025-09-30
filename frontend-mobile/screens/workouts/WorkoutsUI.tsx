@@ -10,7 +10,7 @@ import { BUILD_VARIANT } from '@/config/buildVariant';
 const WorkoutsUI = () => {
   const theme = themes[BUILD_VARIANT as keyof typeof themes];
   const { colorScheme } = useColorScheme();
-
+  console.log({ colorScheme });
   const { colors } = theme;
   return (
     <ScreenWrapper title='Workouts'>

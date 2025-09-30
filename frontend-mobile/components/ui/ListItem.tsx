@@ -39,7 +39,12 @@ const createStyles = (
       alignItems: 'center',
       justifyContent: 'space-between',
       paddingHorizontal: spacing.sm,
-      borderRadius: borderRadius.sm,
+      paddingVertical: spacing.md,
+      marginBottom: spacing.md,
+      borderRadius: borderRadius.md,
+      backgroundColor: colors[colorScheme]['surface'],
+      borderColor: colors[colorScheme]['surface'],
+      borderBottomWidth: 1,
     },
     titleText: {
       ...typography.body,
