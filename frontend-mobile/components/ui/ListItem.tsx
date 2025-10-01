@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import {
+  Pressable,
   StyleProp,
   StyleSheet,
   Text,
@@ -40,11 +41,10 @@ const createStyles = (
       justifyContent: 'space-between',
       paddingHorizontal: spacing.sm,
       paddingVertical: spacing.md,
-      marginBottom: spacing.md,
-      borderRadius: borderRadius.md,
-      backgroundColor: colors[colorScheme]['surface'],
-      borderColor: colors[colorScheme]['surface'],
-      borderBottomWidth: 1,
+      marginBottom: spacing.sm,
+      // borderRadius: borderRadius.md,
+      backgroundColor: colors[colorScheme]['background'],
+      elevation: 1,
     },
     titleText: {
       ...typography.body,
@@ -71,13 +71,20 @@ const ListItem = ({
   const styles = createStyles(theme, colorScheme, titlePosition);
 
   return (
-    <View style={[styles.listItemWrapper, styleWrapper]}>
-      {leftElement && <View>{leftElement}</View>}
+    <Pressable
+      onPress={onPressWrapper}
+      style={[styles.listItemWrapper, styleWrapper]}
+    >
+      {leftElement && (
+        <Pressable onPress={onPressLeft}>{leftElement}</Pressable>
+      )}
       <View>
         <Text style={[styles.titleText, styleText]}>{title}</Text>
       </View>
-      {rightElement && <View>{rightElement}</View>}
-    </View>
+      {rightElement && (
+        <Pressable onPress={onPressRight}>{rightElement}</Pressable>
+      )}
+    </Pressable>
   );
 };
 

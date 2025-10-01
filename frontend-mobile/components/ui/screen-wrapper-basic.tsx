@@ -16,7 +16,7 @@ const createStyles = (theme: Theme, colorScheme: ColorScheme) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors[colorScheme]['background'],
+      backgroundColor: colors[colorScheme]['surface'],
     },
     content: {
       flex: 1,

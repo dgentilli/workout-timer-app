@@ -1,6 +1,6 @@
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import HomeUI from '@/screens/Home/HomeUI';
-import SettingsUI from '@/screens/settings/SettingsUI';
+import SettingsScreen from '@/screens/settings/SettingsScreen';
 import WorkoutsUI from '@/screens/workouts/WorkoutsUI';
 import { themes } from '@/themes/main';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -23,7 +23,7 @@ const BottomTabNavigator = () => {
     >
       <Tab.Screen name='Home' component={HomeUI} />
       <Tab.Screen name='Exercise' component={WorkoutsUI} />
-      <Tab.Screen name='Settings' component={SettingsUI} />
+      <Tab.Screen name='Settings' component={SettingsScreen} />
     </Tab.Navigator>
   );
 };
