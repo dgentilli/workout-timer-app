@@ -3,7 +3,6 @@ import ScreenWrapper from '@/components/ui/screen-wrapper-basic';
 import { FlatList } from 'react-native';
 import { SettingsListItem } from './SettingsLogic';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-
 interface SettingsUIProps {
   listConfig: SettingsListItem[];
 }

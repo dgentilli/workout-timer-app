@@ -3,6 +3,7 @@ import { BUILD_VARIANT } from '@/config/buildVariant';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { themes } from '@/themes/main';
 import { MaterialIcons } from '@expo/vector-icons';
+import { SheetManager } from 'react-native-actions-sheet';
 
 export interface SettingsListItem {
   id: string;
@@ -25,7 +26,7 @@ const useSettingsLogic = () => {
         <MaterialIcons name='arrow-right' size={32} color={iconColor} />
       ),
       onPressWrapper: () => {
-        console.log('Right Element!');
+        SheetManager.show('settings-appearance');
       },
     },
     {
@@ -35,7 +36,7 @@ const useSettingsLogic = () => {
         <MaterialIcons name='arrow-right' size={32} color={iconColor} />
       ),
       onPressWrapper: () => {
-        console.log('Change theme!');
+        SheetManager.show('settings-appearance');
       },
     },
   ];
