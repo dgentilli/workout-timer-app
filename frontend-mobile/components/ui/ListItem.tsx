@@ -15,7 +15,7 @@ import { ColorScheme, Theme, themes } from '@/themes/main';
 
 type TitlePosition = 'left' | 'center' | 'right'; // default left
 
-interface ListItemProps {
+export interface ListItemProps {
   title: string;
   titlePosition?: TitlePosition;
   leftElement?: ReactNode;

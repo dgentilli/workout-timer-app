@@ -1,19 +1,18 @@
 import { useCallback } from 'react';
 import ActionSheetWrapper from './action-sheet-wrapper';
-import ListItem from './ListItem';
 import { SheetManager } from 'react-native-actions-sheet';
+import Button from './button';
 
-const AppAppearanceSheet = () => {
+const UserSettingsSheet = () => {
   const closeSheet = useCallback(() => {
     SheetManager.hide('settings-appearance');
   }, []);
 
   return (
-    <ActionSheetWrapper sheetId={'settings-appearance'} title='App Appearance'>
-      <ListItem title='Light' onPressWrapper={closeSheet} />
-      <ListItem title='Dark' />
+    <ActionSheetWrapper sheetId={'user-settings'} title='Settings'>
+      <Button title='Logout' onPress={closeSheet} />
     </ActionSheetWrapper>
   );
 };
 
-export default AppAppearanceSheet;
+export default UserSettingsSheet;
