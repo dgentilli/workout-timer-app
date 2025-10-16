@@ -6,7 +6,7 @@ import { BUILD_VARIANT } from '@/config/buildVariant';
 interface ButtonProps {
   title: string;
   onPress: () => void;
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'destructive';
   size?: { height?: number; width?: number };
   fullWidth?: boolean;
   disabled?: boolean;
@@ -16,22 +16,27 @@ interface ButtonProps {
 const createStyles = (
   theme: Theme,
   colorScheme: ColorScheme,
-  variant: 'primary' | 'secondary',
+  variant: 'primary' | 'secondary' | 'destructive',
   size?: { height?: number; width?: number },
   fullWidth?: boolean,
   disabled?: boolean
 ) => {
   const isPrimary = variant === 'primary';
   const { colors, spacing, typography, borderRadius } = theme;
+  const getButtonBgColor = () => {
+    if (variant === 'destructive') return 'red';
+    if (variant === 'secondary') return 'transparent';
+    return colors[colorScheme]['primary'];
+  };
 
   return StyleSheet.create({
     button: {
       height: size?.height || spacing.xxl,
       width: fullWidth ? '100%' : size?.width || 'auto',
       borderRadius: borderRadius.md,
-      backgroundColor: colors[colorScheme]['primary'],
+      backgroundColor: getButtonBgColor(),
       borderWidth: isPrimary ? 0 : 1,
-      borderColor: '#007AFF',
+      borderColor: variant === 'secondary' ? '#007AFF' : 'transparent',
       justifyContent: 'center',
       alignItems: 'center',
       paddingHorizontal: spacing.lg,
