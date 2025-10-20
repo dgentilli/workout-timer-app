@@ -9,6 +9,7 @@ import { BUILD_VARIANT } from '@/config/buildVariant';
 import { Workout } from './WorkoutsLogic';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import ListItem from '@/components/ui/ListItem';
+import { useNavigation } from 'expo-router';
 
 interface WorkoutsUIProps {
   workoutsConfig: Workout[];
@@ -35,6 +36,7 @@ const WorkoutsUI = ({
   const { colorScheme } = useColorScheme();
   const styles = createStyles();
   const iconColor = theme.colors[colorScheme].text.secondary;
+  const navigation = useNavigation();
 
   console.log({ colorScheme });
 
@@ -91,6 +93,7 @@ const WorkoutsUI = ({
         renderItem={({ item }) => (
           <ListItem
             title={item.name}
+            onPressWrapper={() => navigation.navigate('WorkoutDetails')}
             rightElement={
               <MaterialIcons name='arrow-right' size={32} color={iconColor} />
             }
