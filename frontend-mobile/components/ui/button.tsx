@@ -1,6 +1,13 @@
 import { ColorScheme, Theme, themes } from '@/themes/main';
 import React from 'react';
-import { Pressable, Text, View, StyleSheet } from 'react-native';
+import {
+  Pressable,
+  Text,
+  View,
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { BUILD_VARIANT } from '@/config/buildVariant';
 interface ButtonProps {
@@ -11,6 +18,7 @@ interface ButtonProps {
   fullWidth?: boolean;
   disabled?: boolean;
   icon?: React.ReactNode;
+  style?: StyleProp<ViewStyle>;
 }
 
 const createStyles = (
@@ -27,6 +35,11 @@ const createStyles = (
     if (variant === 'destructive') return 'red';
     if (variant === 'secondary') return 'transparent';
     return colors[colorScheme]['primary'];
+  };
+
+  const getButtonTextColor = () => {
+    if (variant === 'secondary') return colors[colorScheme]['primary'];
+    return colors[colorScheme]['surface'];
   };
 
   return StyleSheet.create({
@@ -48,7 +61,7 @@ const createStyles = (
     },
     text: {
       ...typography.body,
-      color: colors[colorScheme]['surface'],
+      color: getButtonTextColor(),
     },
     iconContainer: {
       marginRight: spacing.sm,
@@ -66,6 +79,7 @@ const Button = ({
   fullWidth = false,
   disabled = false,
   icon,
+  style,
 }: ButtonProps) => {
   const theme = themes[BUILD_VARIANT as keyof typeof themes];
   const { colorScheme } = useColorScheme();
@@ -87,7 +101,11 @@ const Button = ({
 
   return (
     <Pressable
-      style={({ pressed }) => [styles.button, { opacity: pressed ? 0.7 : 1 }]}
+      style={({ pressed }) => [
+        styles.button,
+        { opacity: pressed ? 0.7 : 1 },
+        style,
+      ]}
       onPress={handlePress}
       disabled={disabled}
     >

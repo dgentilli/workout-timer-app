@@ -4,7 +4,7 @@ import { Workout } from '../workouts/WorkoutsLogic';
 import Button from '@/components/ui/button';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { themes } from '@/themes/main';
+import { Theme, themes } from '@/themes/main';
 import { BUILD_VARIANT } from '@/config/buildVariant';
 import ScreenWrapper from '@/components/ui/screen-wrapper-basic';
 import ListItem from '@/components/ui/ListItem';
@@ -16,12 +16,17 @@ interface WorkoutDetailsUIProps {
   error?: { code: string; message: string };
 }
 
-const createStyles = () => {
+const createStyles = (theme: Theme) => {
   return StyleSheet.create({
     listFooterStyle: {
       position: 'fixed',
       bottom: 0,
       width: '100%',
+    },
+    buttonRowWrapper: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      gap: theme.spacing.sm,
     },
   });
 };
@@ -34,9 +39,8 @@ const WorkoutDetailsUI = ({
   const { exercises } = workoutDetails;
   const theme = themes[BUILD_VARIANT as keyof typeof themes];
   const { colorScheme } = useColorScheme();
-  const { colors } = theme;
-  const styles = createStyles();
-  const iconColor = theme.colors[colorScheme].text.secondary;
+  const { colors, spacing } = theme;
+  const styles = createStyles(theme);
 
   const renderEmptyList = () => {
     return (
@@ -62,15 +66,25 @@ const WorkoutDetailsUI = ({
       <View style={styles.listFooterStyle}>
         <Spacer />
         <Button
-          title='Edit'
-          onPress={() => console.log('Edit workout pressed')}
+          title='Start Workout'
+          onPress={() => console.log('Start workout pressed')}
         />
-        <Spacer />
-        <Button
-          title='Delete'
-          variant='destructive'
-          onPress={() => console.log('Delete workout pressed')}
-        />
+        <Spacer height={spacing.xxl} />
+        <View style={styles.buttonRowWrapper}>
+          <Button
+            title='Edit'
+            variant='secondary'
+            onPress={() => console.log('Edit workout pressed')}
+            style={{ flex: 1 }}
+          />
+          <Button
+            title='Delete'
+            variant='destructive'
+            onPress={() => console.log('Delete workout pressed')}
+            style={{ flex: 1 }}
+          />
+          <Spacer />
+        </View>
       </View>
     );
   };
