@@ -12,6 +12,7 @@ import Spacer from '@/components/ui/Spacer';
 
 interface WorkoutDetailsUIProps {
   workoutDetails: Workout;
+  onStartWorkout: () => void;
   isLoading?: boolean;
   error?: { code: string; message: string };
 }
@@ -35,6 +36,7 @@ const WorkoutDetailsUI = ({
   workoutDetails,
   isLoading,
   error,
+  onStartWorkout,
 }: WorkoutDetailsUIProps) => {
   const { exercises } = workoutDetails;
   const theme = themes[BUILD_VARIANT as keyof typeof themes];
@@ -65,10 +67,7 @@ const WorkoutDetailsUI = ({
     return (
       <View style={styles.listFooterStyle}>
         <Spacer />
-        <Button
-          title='Start Workout'
-          onPress={() => console.log('Start workout pressed')}
-        />
+        <Button title='Start Workout' onPress={onStartWorkout} />
         <Spacer height={spacing.xxl} />
         <View style={styles.buttonRowWrapper}>
           <Button

@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 export type Exercise = {
   name: string;
   duration: number;
@@ -26,6 +28,7 @@ const useWorkoutsLogic = () => {
       ],
     },
   ];
+
   return {
     workoutsConfig,
   };

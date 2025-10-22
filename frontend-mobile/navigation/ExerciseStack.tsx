@@ -1,5 +1,6 @@
 import WorkoutDetailsScreen from '@/screens/WorkoutDetails/WorkoutDetailsScreen';
 import WorkoutsScreen from '@/screens/workouts/WorkoutsScreen';
+import WorkoutTimerScreen from '@/screens/WorkoutTimer/WorkoutTimer';
 import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
@@ -13,6 +14,7 @@ const ExerciseStack = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen name='WorkoutDetails' component={WorkoutDetailsScreen} />
+      <Stack.Screen name='WorkoutTimer' component={WorkoutTimerScreen} />
     </Stack.Navigator>
   );
 };

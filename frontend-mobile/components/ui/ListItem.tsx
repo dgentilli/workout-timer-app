@@ -42,7 +42,7 @@ const createStyles = (
       paddingHorizontal: spacing.sm,
       paddingVertical: spacing.md,
       marginBottom: spacing.sm,
-      // borderRadius: borderRadius.md,
+      borderRadius: borderRadius.md,
       backgroundColor: colors[colorScheme]['background'],
       elevation: 1,
     },

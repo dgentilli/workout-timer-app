@@ -1,6 +1,8 @@
+import { useNavigation } from '@react-navigation/native';
 import { Workout } from '../workouts/WorkoutsLogic';
 
 const useWorkoutDetailsLogic = () => {
+  const navigation = useNavigation();
   const workoutDetails: Workout = {
     id: '0',
     name: 'Upper Body Circuit',
@@ -15,7 +17,11 @@ const useWorkoutDetailsLogic = () => {
     ],
   };
 
-  return { workoutDetails };
+  const onStartWorkout = () => {
+    navigation.navigate('WorkoutTimer');
+  };
+
+  return { workoutDetails, onStartWorkout };
 };
 
 export default useWorkoutDetailsLogic;

@@ -5,9 +5,14 @@ import WorkoutDetialsUI from './WorkoutDetailsUI';
 const MemoizedWorkoutDetailssUI = memo(WorkoutDetialsUI);
 
 const WorkoutDetailsScreen = () => {
-  const { workoutDetails } = useWorkoutDetailsLogic();
+  const { workoutDetails, onStartWorkout } = useWorkoutDetailsLogic();
 
-  return <MemoizedWorkoutDetailssUI workoutDetails={workoutDetails} />;
+  return (
+    <MemoizedWorkoutDetailssUI
+      workoutDetails={workoutDetails}
+      onStartWorkout={onStartWorkout}
+    />
+  );
 };
 
 export default WorkoutDetailsScreen;
