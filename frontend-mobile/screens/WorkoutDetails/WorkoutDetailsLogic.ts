@@ -1,8 +1,16 @@
 import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { ExerciseStackParamList } from '@/navigation/types';
 import { Workout } from '../workouts/WorkoutsLogic';
 
+type WorkoutDetailsNavigationProp = StackNavigationProp<
+  ExerciseStackParamList,
+  'WorkoutDetails'
+>;
+
 const useWorkoutDetailsLogic = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<WorkoutDetailsNavigationProp>();
+
   const workoutDetails: Workout = {
     id: '0',
     name: 'Upper Body Circuit',
@@ -18,7 +26,7 @@ const useWorkoutDetailsLogic = () => {
   };
 
   const onStartWorkout = () => {
-    navigation.navigate('WorkoutTimer');
+    navigation.navigate('WorkoutTimer', { workoutId: '0' });
   };
 
   return { workoutDetails, onStartWorkout };

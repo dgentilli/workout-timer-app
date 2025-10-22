@@ -12,7 +12,7 @@ import { BottomTabParamList } from './types';
 
 const Tab = createBottomTabNavigator();
 
-const routesWithHiddenBottomTab = ['WorkoutDetails'];
+const routesWithHiddenBottomTab = ['WorkoutDetails', 'WorkoutTimer'];
 
 const getBottomTabDisplay = (
   route: RouteProp<BottomTabParamList, 'Exercise'>

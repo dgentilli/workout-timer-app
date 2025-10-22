@@ -1,15 +1,26 @@
-// Define params for each screen in the Exercise Stack
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+
 export type ExerciseStackParamList = {
-  Exercise: undefined; // WorkoutsScreen - no params
-  WorkoutDetails: { workoutId: string }; // Assuming you'll pass workout ID
+  Exercise: undefined;
+  WorkoutDetails: { workoutId: string };
+  WorkoutTimer: { workoutId: string };
 };
 
-// Define params for each tab in the Bottom Tab Navigator
 export type BottomTabParamList = {
   Home: undefined;
   Exercise: undefined; // The stack itself doesn't take params
   Settings: undefined;
 };
+
+// export type ExerciseStackScreenProps<T extends keyof ExerciseStackParamList> =
+//   CompositeScreenProps
+//     StackScreenProps<ExerciseStackParamList, T>,
+//     BottomTabScreenProps<BottomTabParamList>
+//   >;
+
+// Helper types for typing tab screens
+export type BottomTabScreenPropsType<T extends keyof BottomTabParamList> =
+  BottomTabScreenProps<BottomTabParamList, T>;
 
 // Declare global types for React Navigation
 declare global {
