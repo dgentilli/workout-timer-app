@@ -12,12 +12,6 @@ export type BottomTabParamList = {
   Settings: undefined;
 };
 
-// export type ExerciseStackScreenProps<T extends keyof ExerciseStackParamList> =
-//   CompositeScreenProps
-//     StackScreenProps<ExerciseStackParamList, T>,
-//     BottomTabScreenProps<BottomTabParamList>
-//   >;
-
 // Helper types for typing tab screens
 export type BottomTabScreenPropsType<T extends keyof BottomTabParamList> =
   BottomTabScreenProps<BottomTabParamList, T>;

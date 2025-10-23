@@ -38,7 +38,7 @@ export const themes = {
         fontWeight: '600' as const,
       },
       subheading: {
-        fontSize: 18,
+        fontSize: 22,
         fontWeight: '600' as const,
       },
       body: {
