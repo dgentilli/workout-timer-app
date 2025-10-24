@@ -73,7 +73,11 @@ const ListItem = ({
   return (
     <Pressable
       onPress={onPressWrapper}
-      style={[styles.listItemWrapper, styleWrapper]}
+      style={({ pressed }) => [
+        styles.listItemWrapper,
+        styleWrapper,
+        { opacity: pressed ? 0.7 : 1 },
+      ]}
     >
       {leftElement && (
         <Pressable onPress={onPressLeft}>{leftElement}</Pressable>
