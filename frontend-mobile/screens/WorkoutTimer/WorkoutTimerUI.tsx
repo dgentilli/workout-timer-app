@@ -6,10 +6,13 @@ import { ColorScheme, Theme, themes } from '@/themes/main';
 import { BUILD_VARIANT } from '@/config/buildVariant';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import IconButton from '@/components/ui/IconButton';
+import { WorkoutStatus } from '@/constants/workout';
+import { useSecondsTimer } from '@/hooks/use-seconds-timer';
+import { useState } from 'react';
 
 interface WorkoutTimerUIProps {
   currentWorkout: Workout;
-  workoutStatus: 'idle' | 'active' | 'paused' | 'completed';
+  workoutStatus: WorkoutStatus;
   currentExerciseIndex: number;
   onGoBack: () => void;
   onGoForward: () => void;
@@ -43,9 +46,17 @@ const WorkoutTimerUI = ({
   const { colors, spacing } = theme || {};
   const { colorScheme } = useColorScheme();
   const styles = createStyles(theme, colorScheme);
-  const workoutStatus = 'active'; // hard code for now
+  const [workoutStatus, setWorkoutStatus] = useState<WorkoutStatus>('idle');
+  // const workoutStatus = 'active'; // hard code for now
   // @ts-ignore
-  const isPaused = workoutStatus === 'paused';
+  const isPaused = workoutStatus !== 'active';
+  const { count, progress } = useSecondsTimer({
+    durationInSeconds: 30,
+    status: workoutStatus,
+    onComplete: () => {
+      console.log('onComplete runs !!!');
+    },
+  });
 
   const currentExerciseName =
     currentWorkout?.exercises[currentExerciseIndex].name || '';
@@ -60,7 +71,10 @@ const WorkoutTimerUI = ({
           borderWidth: 1,
           borderColor: 'pink',
         }}
-      />
+      >
+        <Text>{`Count: ${count}`}</Text>
+        <Text>{`Progress: ${progress}`}</Text>
+      </View>
       <Spacer height={spacing.xl} />
       <Text style={styles.exerciseNameText}>{currentExerciseName}</Text>
       <Spacer />
@@ -73,10 +87,14 @@ const WorkoutTimerUI = ({
           accessibilityLabel='Back to Previous Exercise'
         />
         <IconButton
-          name={isPaused ? 'pause' : 'play-arrow'}
+          name={isPaused ? 'play-arrow' : 'pause'}
           color={colors[colorScheme]['text']['secondary']}
           size={64}
-          onPress={() => console.log('Play/Pause button Pressed!')}
+          onPress={() =>
+            setWorkoutStatus((prev) =>
+              prev === 'active' ? 'paused' : 'active'
+            )
+          }
           accessibilityLabel={isPaused ? 'Pause Exercise' : 'Start Exercise'}
         />
         <IconButton
