@@ -5,10 +5,10 @@ import Spacer from '@/components/ui/Spacer';
 import { ColorScheme, Theme, themes } from '@/themes/main';
 import { BUILD_VARIANT } from '@/config/buildVariant';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import IconButton from '@/components/ui/IconButton';
 import { WorkoutStatus } from '@/constants/workout';
 import { useSecondsTimer } from '@/hooks/use-seconds-timer';
 import { useState } from 'react';
+import PlayerControlBar from '@/components/ui/PlayerControlBar';
 
 interface WorkoutTimerUIProps {
   currentWorkout: Workout;
@@ -49,7 +49,6 @@ const WorkoutTimerUI = ({
   const [workoutStatus, setWorkoutStatus] = useState<WorkoutStatus>('idle');
   // const workoutStatus = 'active'; // hard code for now
   // @ts-ignore
-  const isPaused = workoutStatus !== 'active';
   const { count, progress } = useSecondsTimer({
     durationInSeconds: 30,
     status: workoutStatus,
@@ -60,6 +59,10 @@ const WorkoutTimerUI = ({
 
   const currentExerciseName =
     currentWorkout?.exercises[currentExerciseIndex].name || '';
+
+  const togglePlayPause = () => {
+    setWorkoutStatus((prev) => (prev === 'active' ? 'paused' : 'active'));
+  };
 
   return (
     <ScreenWrapper title={currentWorkout?.name}>
@@ -78,33 +81,10 @@ const WorkoutTimerUI = ({
       <Spacer height={spacing.xl} />
       <Text style={styles.exerciseNameText}>{currentExerciseName}</Text>
       <Spacer />
-      <View style={styles.iconButtonBar}>
-        <IconButton
-          name='skip-previous'
-          color={colors[colorScheme]['text']['secondary']}
-          size={64}
-          onPress={() => console.log('skip previous Pressed!')}
-          accessibilityLabel='Back to Previous Exercise'
-        />
-        <IconButton
-          name={isPaused ? 'play-arrow' : 'pause'}
-          color={colors[colorScheme]['text']['secondary']}
-          size={64}
-          onPress={() =>
-            setWorkoutStatus((prev) =>
-              prev === 'active' ? 'paused' : 'active'
-            )
-          }
-          accessibilityLabel={isPaused ? 'Pause Exercise' : 'Start Exercise'}
-        />
-        <IconButton
-          name='skip-next'
-          color={colors[colorScheme]['text']['secondary']}
-          size={64}
-          onPress={() => console.log('skip-next Pressed!')}
-          accessibilityLabel='Skip to Next Exercise'
-        />
-      </View>
+      <PlayerControlBar
+        status={workoutStatus}
+        togglePlayPause={togglePlayPause}
+      />
     </ScreenWrapper>
   );
 };
