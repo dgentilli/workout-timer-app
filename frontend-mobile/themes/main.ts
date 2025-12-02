@@ -33,6 +33,10 @@ export const themes = {
       xxl: 48,
     },
     typography: {
+      extraLarge: {
+        fontSize: 48,
+        fontWeight: '600' as const,
+      },
       heading: {
         fontSize: 24,
         fontWeight: '600' as const,
