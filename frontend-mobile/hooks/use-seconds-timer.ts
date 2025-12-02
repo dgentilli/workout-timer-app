@@ -98,5 +98,5 @@ export const useSecondsTimer = ({
     };
   }, [status, durationInSeconds, onComplete]);
 
-  return { count, progress: progress.toFixed(2) };
+  return { count, progress };
 };

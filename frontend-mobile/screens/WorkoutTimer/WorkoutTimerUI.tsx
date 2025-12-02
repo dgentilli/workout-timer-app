@@ -9,7 +9,7 @@ import { WorkoutStatus } from '@/constants/workout';
 import { useSecondsTimer } from '@/hooks/use-seconds-timer';
 import { useState } from 'react';
 import PlayerControlBar from '@/components/ui/PlayerControlBar';
-
+import CircularProgress from '@/components/ui/ProgressCircular';
 interface WorkoutTimerUIProps {
   currentWorkout: Workout;
   workoutStatus: WorkoutStatus;
@@ -19,11 +19,17 @@ interface WorkoutTimerUIProps {
 }
 
 const createStyles = (theme: Theme, colorScheme: ColorScheme) => {
-  const { typography } = theme || {};
+  const { typography, colors } = theme || {};
 
   return StyleSheet.create({
     exerciseNameText: {
+      ...typography.heading,
+      color: colors[colorScheme]['text']['primary'],
+      textAlign: 'center',
+    },
+    timerText: {
       ...typography.subheading,
+      color: colors[colorScheme]['text']['secondary'],
       textAlign: 'center',
     },
     iconButtonBar: {
@@ -43,7 +49,7 @@ const WorkoutTimerUI = ({
   onGoForward,
 }: WorkoutTimerUIProps) => {
   const theme = themes[BUILD_VARIANT as keyof typeof themes];
-  const { colors, spacing } = theme || {};
+  const { spacing } = theme || {};
   const { colorScheme } = useColorScheme();
   const styles = createStyles(theme, colorScheme);
   const [workoutStatus, setWorkoutStatus] = useState<WorkoutStatus>('idle');
@@ -71,12 +77,11 @@ const WorkoutTimerUI = ({
         style={{
           width: '100%',
           height: 340,
-          borderWidth: 1,
-          borderColor: 'pink',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
-        <Text>{`Count: ${count}`}</Text>
-        <Text>{`Progress: ${progress}`}</Text>
+        <CircularProgress count={count} progress={progress} />
       </View>
       <Spacer height={spacing.xl} />
       <Text style={styles.exerciseNameText}>{currentExerciseName}</Text>
