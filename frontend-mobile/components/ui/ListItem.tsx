@@ -49,7 +49,7 @@ const createStyles = (
     titleText: {
       ...typography.body,
       textAlign: titlePosition,
-      color: 'black',
+      color: colors[colorScheme]['text']['secondary'],
     },
   });
 };

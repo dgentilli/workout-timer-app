@@ -40,6 +40,7 @@ const createStyles = (
     titleText: {
       ...typography.subheading,
       marginLeft: spacing.lg,
+      color: colors[colorScheme]['text']['primary'],
     },
   });
 };
