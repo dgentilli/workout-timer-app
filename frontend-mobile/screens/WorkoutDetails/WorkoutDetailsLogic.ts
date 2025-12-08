@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ExerciseStackParamList } from '@/navigation/types';
-import { Workout } from '../workouts/WorkoutsLogic';
+import { Workout } from '@/constants/workoutTypes';
 
 type WorkoutDetailsNavigationProp = StackNavigationProp<
   ExerciseStackParamList,

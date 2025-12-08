@@ -3,11 +3,12 @@ import IconButton from './IconButton';
 import { themes } from '@/themes/main';
 import { BUILD_VARIANT } from '@/config/buildVariant';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { WorkoutStatus } from '@/constants/workout';
-
+import { WorkoutStatus } from '@/constants/workoutTypes';
 interface PlayerControlBarProps {
   status: WorkoutStatus;
   togglePlayPause: () => void;
+  onGoForward: () => void;
+  onGoBack: () => void;
 }
 
 const createStyles = () => {
@@ -25,6 +26,8 @@ const createStyles = () => {
 const PlayerControlBar = ({
   status,
   togglePlayPause,
+  onGoForward,
+  onGoBack,
 }: PlayerControlBarProps) => {
   const theme = themes[BUILD_VARIANT as keyof typeof themes];
   const { colors } = theme || {};
@@ -38,7 +41,7 @@ const PlayerControlBar = ({
         name='skip-previous'
         color={colors[colorScheme]['text']['secondary']}
         size={64}
-        onPress={() => console.log('skip previous Pressed!')}
+        onPress={onGoBack}
         accessibilityLabel='Back to Previous Exercise'
       />
       <IconButton
@@ -52,7 +55,7 @@ const PlayerControlBar = ({
         name='skip-next'
         color={colors[colorScheme]['text']['secondary']}
         size={64}
-        onPress={() => console.log('skip-next Pressed!')}
+        onPress={onGoForward}
         accessibilityLabel='Skip to Next Exercise'
       />
     </View>

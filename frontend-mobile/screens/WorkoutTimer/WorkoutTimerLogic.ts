@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Workout } from '../workouts/WorkoutsLogic';
+import { Workout } from '@/constants/workoutTypes';
+import { WorkoutStatus } from '@/constants/workoutTypes';
 
 const useWorkoutTimerLogic = () => {
   // A bunch of stuff we will get from redux
@@ -17,7 +18,7 @@ const useWorkoutTimerLogic = () => {
       { name: 'Hindu push-up', duration: 30 },
     ],
   }; // will come from redux selector
-  const workoutStatus: 'idle' | 'active' | 'paused' | 'completed' = 'idle'; // will come from redux selector
+  const workoutStatus: WorkoutStatus = 'idle'; // will come from redux selector
   // for setting the index, we'll eventually dispatch a redux action
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
   const exercisesLength = currentWorkout?.exercises?.length;

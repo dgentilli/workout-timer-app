@@ -1,13 +1,13 @@
 import ScreenWrapper from '@/components/ui/screen-wrapper-basic';
 import { StyleSheet, Text, View } from 'react-native';
-import { Workout } from '../workouts/WorkoutsLogic';
+import { Workout } from '@/constants/workoutTypes';
 import Spacer from '@/components/ui/Spacer';
 import { ColorScheme, Theme, themes } from '@/themes/main';
 import { BUILD_VARIANT } from '@/config/buildVariant';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { WorkoutStatus } from '@/constants/workout';
 import { useSecondsTimer } from '@/hooks/use-seconds-timer';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PlayerControlBar from '@/components/ui/PlayerControlBar';
 import CircularProgress from '@/components/ui/ProgressCircular';
 interface WorkoutTimerUIProps {
@@ -63,11 +63,37 @@ const WorkoutTimerUI = ({
     },
   });
 
+  // component mounts
+  // zustand sets the currentExerciseIndex
+  // user presses play
+  // zustand updates the status to active
+  // check status in a useEffect. when we switch to active give user a 3 second countdown
+  // then start the exercise countdown
+  // if user presses pause / play zustand updates the status to paused / active as needed
+  // component checks the status
+  // if active and count === 0
+  // zustand updates the current exercise index and updates the status to idle
+  // another 3 second countdown
+  // then we update the status to active
+  // process starts over
+
+  useEffect(() => {
+    if (count !== 0) return;
+    if (workoutStatus === 'active') {
+      onGoForward();
+    }
+  }, [count, workoutStatus, onGoForward]);
+
   const currentExerciseName =
     currentWorkout?.exercises[currentExerciseIndex].name || '';
 
   const togglePlayPause = () => {
     setWorkoutStatus((prev) => (prev === 'active' ? 'paused' : 'active'));
+  };
+
+  const test = () => {
+    setWorkoutStatus('idle');
+    onGoForward();
   };
 
   return (
@@ -89,6 +115,8 @@ const WorkoutTimerUI = ({
       <PlayerControlBar
         status={workoutStatus}
         togglePlayPause={togglePlayPause}
+        onGoForward={test}
+        onGoBack={onGoBack}
       />
     </ScreenWrapper>
   );

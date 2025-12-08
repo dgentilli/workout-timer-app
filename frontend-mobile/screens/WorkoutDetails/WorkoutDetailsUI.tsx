@@ -1,6 +1,6 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import StatusDisplay from '@/components/ui/status-display';
-import { Workout } from '../workouts/WorkoutsLogic';
+import { Workout } from '@/constants/workoutTypes';
 import Button from '@/components/ui/button';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { useColorScheme } from '@/hooks/use-color-scheme';
