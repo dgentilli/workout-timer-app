@@ -6,7 +6,7 @@ import StatusDisplay from '@/components/ui/status-display';
 import { themes } from '@/themes/main';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { BUILD_VARIANT } from '@/config/buildVariant';
-import { Workout } from './WorkoutsLogic';
+import { Workout } from '@/constants/workoutTypes';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import ListItem from '@/components/ui/ListItem';
 import { useNavigation } from 'expo-router';

@@ -1,11 +1,10 @@
 import ScreenWrapper from '@/components/ui/screen-wrapper-basic';
 import { StyleSheet, Text, View } from 'react-native';
-import { Workout } from '@/constants/workoutTypes';
+import { Workout, WorkoutStatus } from '@/constants/workoutTypes';
 import Spacer from '@/components/ui/Spacer';
 import { ColorScheme, Theme, themes } from '@/themes/main';
 import { BUILD_VARIANT } from '@/config/buildVariant';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { WorkoutStatus } from '@/constants/workout';
 import { useSecondsTimer } from '@/hooks/use-seconds-timer';
 import { useEffect, useState } from 'react';
 import PlayerControlBar from '@/components/ui/PlayerControlBar';
@@ -83,10 +82,11 @@ const WorkoutTimerUI = ({
       onGoForward();
     }
   }, [count, workoutStatus, onGoForward]);
+  console.log('currentWorkout recd', currentWorkout);
+  console.log('currentExerciseIndex recd', currentExerciseIndex);
 
   const currentExerciseName =
-    currentWorkout?.exercises[currentExerciseIndex].name || '';
-
+    currentWorkout?.exercises[currentExerciseIndex]?.name || '';
   const togglePlayPause = () => {
     setWorkoutStatus((prev) => (prev === 'active' ? 'paused' : 'active'));
   };

@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ExerciseStackParamList } from '@/navigation/types';
 import { Workout } from '@/constants/workoutTypes';
+import { useWorkoutActions } from '@/global-state/workoutStore';
 
 type WorkoutDetailsNavigationProp = StackNavigationProp<
   ExerciseStackParamList,
@@ -10,7 +11,7 @@ type WorkoutDetailsNavigationProp = StackNavigationProp<
 
 const useWorkoutDetailsLogic = () => {
   const navigation = useNavigation<WorkoutDetailsNavigationProp>();
-
+  const { setCurrentWorkout } = useWorkoutActions();
   const workoutDetails: Workout = {
     id: '0',
     name: 'Upper Body Circuit',
@@ -26,6 +27,7 @@ const useWorkoutDetailsLogic = () => {
   };
 
   const onStartWorkout = () => {
+    setCurrentWorkout(workoutDetails, 'active', 0);
     navigation.navigate('WorkoutTimer', { workoutId: '0' });
   };
 
