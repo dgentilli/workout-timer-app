@@ -17,6 +17,7 @@ interface WorkoutTimerUIProps {
   onGoForward: () => void;
   onStartExercise: () => void;
   togglePlayPause: () => void;
+  onRest: () => void;
 }
 
 const createStyles = (theme: Theme, colorScheme: ColorScheme) => {
@@ -51,40 +52,49 @@ const WorkoutTimerUI = ({
   onGoForward,
   onStartExercise,
   togglePlayPause,
+  onRest,
 }: WorkoutTimerUIProps) => {
   const theme = themes[BUILD_VARIANT as keyof typeof themes];
+  const { restInterval, exercises } = currentWorkout;
   const { spacing } = theme || {};
   const { colorScheme } = useColorScheme();
   const styles = createStyles(theme, colorScheme);
   // @ts-ignore
   const { count, progress } = useSecondsTimer({
-    durationInSeconds: 30,
+    durationInSeconds:
+      workoutStatus === 'rest'
+        ? restInterval
+        : exercises[currentExerciseIndex]?.duration,
     status: workoutStatus,
     onComplete: () => {
       console.log('onComplete runs !!!');
     },
   });
 
+  const getScreenTitle = () => {
+    if (workoutStatus === 'rest') return 'Rest';
+
+    return exercises[currentExerciseIndex]?.name || '';
+  };
+
   useEffect(() => {
     if (count !== 0) return;
+
     if (workoutStatus === 'active') {
-      onGoForward();
+      return onRest();
+    }
+
+    if (workoutStatus === 'rest') {
+      return onGoForward();
     }
 
     if (workoutStatus === 'idle') {
-      onStartExercise();
+      return onStartExercise();
     }
-  }, [count, workoutStatus, onGoForward, onStartExercise]);
-
-  const currentExerciseName =
-    currentWorkout?.exercises[currentExerciseIndex]?.name || '';
-
-  const test = () => {
-    onGoForward();
-  };
+  }, [count, workoutStatus, onGoForward, onStartExercise, onRest]);
 
   return (
-    <ScreenWrapper title={currentWorkout?.name}>
+    <ScreenWrapper title={getScreenTitle()}>
       <Spacer />
       <View
         style={{
@@ -97,12 +107,12 @@ const WorkoutTimerUI = ({
         <CircularProgress count={count} progress={progress} />
       </View>
       <Spacer height={spacing.xl} />
-      <Text style={styles.exerciseNameText}>{currentExerciseName}</Text>
+      <Text style={styles.exerciseNameText}>{getScreenTitle()}</Text>
       <Spacer />
       <PlayerControlBar
         status={workoutStatus}
         togglePlayPause={togglePlayPause}
-        onGoForward={test}
+        onGoForward={onGoForward}
         onGoBack={onGoBack}
       />
     </ScreenWrapper>

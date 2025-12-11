@@ -1,8 +1,9 @@
+import { WorkoutStatus } from '@/constants/workoutTypes';
 import { useEffect, useRef, useState } from 'react';
 
 type TimerProps = {
   durationInSeconds: number;
-  status: 'idle' | 'active' | 'paused' | 'completed';
+  status: WorkoutStatus;
   onComplete: () => void;
 };
 
@@ -32,7 +33,7 @@ export const useSecondsTimer = ({
 
   // Handle status changes and duration changes
   useEffect(() => {
-    if (status === 'active') {
+    if (status === 'active' || status === 'rest') {
       // Starting or resuming
       if (
         remainingTimeRef.current === 0 ||
@@ -52,6 +53,7 @@ export const useSecondsTimer = ({
           setCount(0);
           setProgress(1);
           onComplete();
+          // setTimeout(() => setCount(durationInSeconds), 3000);
         } else {
           setCount(Math.ceil(remaining / ONE_SECOND_IN_MS));
           setProgress(elapsed / (durationInSeconds * ONE_SECOND_IN_MS));

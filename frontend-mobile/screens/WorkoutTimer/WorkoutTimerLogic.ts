@@ -3,12 +3,32 @@ import {
   useWorkoutActions,
 } from '@/global-state/workoutStore';
 
+/**
+ * Next steps:
+ * - implement the rest interval
+ * - need to add a new status
+ * - flow should be this
+ * ----user starts the workout
+ * ----status switches from idle to active
+ * ----current exercise finishes
+ * ---- status switches from active to rest
+ * ---- Rest interval counts down
+ * ---- Rest interval finishes and switches from rest to active
+ * ---- After rest interval - figure out why the progress is messed up when you pause/play
+ *
+ */
+
 const useWorkoutTimerLogic = () => {
   const currentWorkout = useCurrentWorkout();
   const { setCurrentWorkout } = useWorkoutActions();
   //@ts-expect-error fix this later
   const { currentExerciseIndex, status, workout } = currentWorkout;
   const exercisesLength = workout.exercises.length;
+
+  const onRest = () => {
+    setCurrentWorkout(workout, 'rest', currentExerciseIndex);
+  };
+
   const onGoForward = () => {
     if (currentExerciseIndex < exercisesLength - 1) {
       setCurrentWorkout(workout, 'active', currentExerciseIndex + 1);
@@ -41,6 +61,7 @@ const useWorkoutTimerLogic = () => {
     onGoBack,
     onStartExercise,
     togglePlayPause,
+    onRest,
   };
 };
 

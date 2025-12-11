@@ -10,4 +10,4 @@ export type Workout = {
   exercises: Exercise[];
 };
 
-export type WorkoutStatus = 'idle' | 'active' | 'paused' | 'completed';
+export type WorkoutStatus = 'idle' | 'active' | 'paused' | 'completed' | 'rest';
