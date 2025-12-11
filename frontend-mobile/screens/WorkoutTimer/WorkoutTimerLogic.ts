@@ -4,11 +4,9 @@ import {
 } from '@/global-state/workoutStore';
 
 const useWorkoutTimerLogic = () => {
-  // A bunch of stuff we will get from redux
-  // use local state or hard code for now just to build the ui
   const currentWorkout = useCurrentWorkout();
-  console.log('********** currentWOrktou recd from zustand', currentWorkout);
   const { setCurrentWorkout } = useWorkoutActions();
+  //@ts-expect-error fix this later
   const { currentExerciseIndex, status, workout } = currentWorkout;
   const exercisesLength = workout.exercises.length;
   const onGoForward = () => {
@@ -22,12 +20,27 @@ const useWorkoutTimerLogic = () => {
     }
   };
 
+  const onStartExercise = () => {
+    setCurrentWorkout(workout, 'active', currentExerciseIndex);
+  };
+
+  const togglePlayPause = () => {
+    console.log('toggle play pause status', status);
+    if (status === 'active') {
+      setCurrentWorkout(workout, 'paused', currentExerciseIndex);
+    } else {
+      setCurrentWorkout(workout, 'active', currentExerciseIndex);
+    }
+  };
+
   return {
     currentWorkout: workout,
     workoutStatus: status,
     currentExerciseIndex,
     onGoForward,
     onGoBack,
+    onStartExercise,
+    togglePlayPause,
   };
 };
 
