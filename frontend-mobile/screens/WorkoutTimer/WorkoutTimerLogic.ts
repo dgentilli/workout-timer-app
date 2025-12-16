@@ -2,6 +2,7 @@ import {
   useCurrentWorkout,
   useWorkoutActions,
 } from '@/global-state/workoutStore';
+import { useSecondsTimer } from '@/hooks/use-seconds-timer';
 
 /**
  * Next steps:
@@ -23,24 +24,46 @@ const useWorkoutTimerLogic = () => {
   const { setCurrentWorkout } = useWorkoutActions();
   //@ts-expect-error fix this later
   const { currentExerciseIndex, status, workout } = currentWorkout;
-  const exercisesLength = workout.exercises.length;
+  const { restInterval, exercises } = workout;
+  const exercisesLength = exercises.length;
+  // console.log('FROM ZUSTAND: currentWorkout from logic file', currentWorkout);
+  const { count, progress } = useSecondsTimer({
+    durationInSeconds:
+      status === 'rest'
+        ? restInterval
+        : exercises[currentExerciseIndex]?.duration,
+    status: status,
+    onComplete: () => {
+      console.log('on complete runs ...');
+    },
+  });
 
   const onRest = () => {
+    console.log('onRest runs....');
     setCurrentWorkout(workout, 'rest', currentExerciseIndex);
   };
 
   const onGoForward = () => {
+    console.log('onGoForward runs....');
+
     if (currentExerciseIndex < exercisesLength - 1) {
       setCurrentWorkout(workout, 'active', currentExerciseIndex + 1);
     }
   };
   const onGoBack = () => {
+    console.log('onGoBack runs..');
     if (currentExerciseIndex > 0) {
       setCurrentWorkout(workout, 'active', currentExerciseIndex - 1);
     }
   };
 
+  const onStartWorkout = () => {
+    setCurrentWorkout(workout, 'idle', currentExerciseIndex);
+  };
+
   const onStartExercise = () => {
+    console.log('onStartExercise runs..');
+
     setCurrentWorkout(workout, 'active', currentExerciseIndex);
   };
 
@@ -57,11 +80,14 @@ const useWorkoutTimerLogic = () => {
     currentWorkout: workout,
     workoutStatus: status,
     currentExerciseIndex,
+    count,
+    progress,
     onGoForward,
     onGoBack,
     onStartExercise,
     togglePlayPause,
     onRest,
+    onStartWorkout,
   };
 };
 

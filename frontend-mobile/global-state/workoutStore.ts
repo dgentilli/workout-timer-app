@@ -50,7 +50,7 @@ export const useWorkoutStore = create<WorkoutState>()(
       { name: 'Workout Store' }
     ),
     {
-      name: 'programming-journal',
+      name: 'workout-app',
       partialize: (state) => ({ currentWorkout: state.currentWorkout }),
     }
   )

@@ -5,7 +5,6 @@ import Spacer from '@/components/ui/Spacer';
 import { ColorScheme, Theme, themes } from '@/themes/main';
 import { BUILD_VARIANT } from '@/config/buildVariant';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { useSecondsTimer } from '@/hooks/use-seconds-timer';
 import { useEffect } from 'react';
 import PlayerControlBar from '@/components/ui/PlayerControlBar';
 import CircularProgress from '@/components/ui/ProgressCircular';
@@ -13,11 +12,14 @@ interface WorkoutTimerUIProps {
   currentWorkout: Workout;
   workoutStatus: WorkoutStatus;
   currentExerciseIndex: number;
+  count: number;
+  progress: number;
   onGoBack: () => void;
   onGoForward: () => void;
   onStartExercise: () => void;
   togglePlayPause: () => void;
   onRest: () => void;
+  onStartWorkout: () => void;
 }
 
 const createStyles = (theme: Theme, colorScheme: ColorScheme) => {
@@ -48,34 +50,29 @@ const WorkoutTimerUI = ({
   currentExerciseIndex,
   currentWorkout,
   workoutStatus,
+  count,
+  progress,
   onGoBack,
   onGoForward,
   onStartExercise,
   togglePlayPause,
   onRest,
+  onStartWorkout,
 }: WorkoutTimerUIProps) => {
   const theme = themes[BUILD_VARIANT as keyof typeof themes];
-  const { restInterval, exercises } = currentWorkout;
+  const { exercises } = currentWorkout;
   const { spacing } = theme || {};
   const { colorScheme } = useColorScheme();
   const styles = createStyles(theme, colorScheme);
-  // @ts-ignore
-  const { count, progress } = useSecondsTimer({
-    durationInSeconds:
-      workoutStatus === 'rest'
-        ? restInterval
-        : exercises[currentExerciseIndex]?.duration,
-    status: workoutStatus,
-    onComplete: () => {
-      console.log('onComplete runs !!!');
-    },
-  });
-
   const getScreenTitle = () => {
     if (workoutStatus === 'rest') return 'Rest';
 
-    return exercises[currentExerciseIndex]?.name || '';
+    return exercises[currentExerciseIndex]?.name;
   };
+
+  useEffect(() => {
+    onStartWorkout();
+  }, [onStartWorkout]);
 
   useEffect(() => {
     if (count !== 0) return;
