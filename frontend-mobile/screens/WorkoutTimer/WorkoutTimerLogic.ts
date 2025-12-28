@@ -3,21 +3,7 @@ import {
   useWorkoutActions,
 } from '@/global-state/workoutStore';
 import { useSecondsTimer } from '@/hooks/use-seconds-timer';
-
-/**
- * Next steps:
- * - implement the rest interval
- * - need to add a new status
- * - flow should be this
- * ----user starts the workout
- * ----status switches from idle to active
- * ----current exercise finishes
- * ---- status switches from active to rest
- * ---- Rest interval counts down
- * ---- Rest interval finishes and switches from rest to active
- * ---- After rest interval - figure out why the progress is messed up when you pause/play
- *
- */
+import { useEffect } from 'react';
 
 const useWorkoutTimerLogic = () => {
   const currentWorkout = useCurrentWorkout();
@@ -26,49 +12,47 @@ const useWorkoutTimerLogic = () => {
   const { currentExerciseIndex, status, workout } = currentWorkout;
   const { restInterval, exercises } = workout;
   const exercisesLength = exercises.length;
-  // console.log('FROM ZUSTAND: currentWorkout from logic file', currentWorkout);
+
+  const duration =
+    status === 'rest'
+      ? restInterval
+      : exercises[currentExerciseIndex]?.duration || 0;
+
   const { count, progress } = useSecondsTimer({
-    durationInSeconds:
-      status === 'rest'
-        ? restInterval
-        : exercises[currentExerciseIndex]?.duration,
+    durationInSeconds: duration,
     status: status,
     onComplete: () => {
-      console.log('on complete runs ...');
+      if (status === 'rest') {
+        setCurrentWorkout(workout, 'active', currentExerciseIndex + 1);
+        return;
+      }
+      if (status === 'active' && currentExerciseIndex === exercisesLength - 1) {
+        setCurrentWorkout(workout, 'completed', currentExerciseIndex);
+        return;
+      }
+      if (status === 'active') {
+        setCurrentWorkout(workout, 'rest', currentExerciseIndex);
+        return;
+      }
     },
   });
 
-  const onRest = () => {
-    console.log('onRest runs....');
-    setCurrentWorkout(workout, 'rest', currentExerciseIndex);
-  };
+  useEffect(() => {
+    setCurrentWorkout(workout, 'idle', 0);
+  }, []);
 
   const onGoForward = () => {
-    console.log('onGoForward runs....');
-
     if (currentExerciseIndex < exercisesLength - 1) {
       setCurrentWorkout(workout, 'active', currentExerciseIndex + 1);
     }
   };
   const onGoBack = () => {
-    console.log('onGoBack runs..');
     if (currentExerciseIndex > 0) {
       setCurrentWorkout(workout, 'active', currentExerciseIndex - 1);
     }
   };
 
-  const onStartWorkout = () => {
-    setCurrentWorkout(workout, 'idle', currentExerciseIndex);
-  };
-
-  const onStartExercise = () => {
-    console.log('onStartExercise runs..');
-
-    setCurrentWorkout(workout, 'active', currentExerciseIndex);
-  };
-
   const togglePlayPause = () => {
-    console.log('toggle play pause status', status);
     if (status === 'active') {
       setCurrentWorkout(workout, 'paused', currentExerciseIndex);
     } else {
@@ -84,10 +68,7 @@ const useWorkoutTimerLogic = () => {
     progress,
     onGoForward,
     onGoBack,
-    onStartExercise,
     togglePlayPause,
-    onRest,
-    onStartWorkout,
   };
 };
 

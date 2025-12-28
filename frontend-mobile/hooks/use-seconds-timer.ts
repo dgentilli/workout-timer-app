@@ -21,6 +21,7 @@ export const useSecondsTimer = ({
   const startTimeRef = useRef<number | null>(null);
   const timeoutRef = useRef<number | null>(null);
   const remainingTimeRef = useRef(durationInSeconds * ONE_SECOND_IN_MS);
+  const prevDurationRef = useRef(durationInSeconds);
 
   // Clear timeout on unmount
   useEffect(() => {
@@ -34,13 +35,15 @@ export const useSecondsTimer = ({
   // Handle status changes and duration changes
   useEffect(() => {
     if (status === 'active' || status === 'rest') {
-      // Starting or resuming
+      // Reset if duration changed OR starting fresh (not resuming from pause)
       if (
-        remainingTimeRef.current === 0 ||
-        remainingTimeRef.current > durationInSeconds * ONE_SECOND_IN_MS
+        prevDurationRef.current !== durationInSeconds ||
+        startTimeRef.current === null
       ) {
-        remainingTimeRef.current = durationInSeconds * ONE_SECOND_IN_MS; // Reset for new duration
+        remainingTimeRef.current = durationInSeconds * ONE_SECOND_IN_MS;
+        prevDurationRef.current = durationInSeconds;
       }
+
       startTimeRef.current = Date.now();
 
       const tick = () => {
@@ -53,12 +56,9 @@ export const useSecondsTimer = ({
           setCount(0);
           setProgress(1);
           onComplete();
-          // setTimeout(() => setCount(durationInSeconds), 3000);
         } else {
           setCount(Math.ceil(remaining / ONE_SECOND_IN_MS));
           setProgress(elapsed / (durationInSeconds * ONE_SECOND_IN_MS));
-
-          // Schedule next check
           timeoutRef.current = setTimeout(tick, CHECK_INTERVAL_MS);
         }
       };
@@ -79,11 +79,15 @@ export const useSecondsTimer = ({
         clearTimeout(timeoutRef.current);
         timeoutRef.current = null;
       }
+
+      // Mark as paused so we know to resume, not restart
+      startTimeRef.current = null;
     } else if (status === 'idle') {
       // Reset everything
       setCount(durationInSeconds);
       setProgress(0);
       remainingTimeRef.current = durationInSeconds * ONE_SECOND_IN_MS;
+      prevDurationRef.current = durationInSeconds;
       startTimeRef.current = null;
 
       if (timeoutRef.current) {

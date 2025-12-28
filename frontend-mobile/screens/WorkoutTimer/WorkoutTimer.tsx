@@ -13,10 +13,7 @@ const WorkoutTimerScreen = () => {
     progress,
     onGoBack,
     onGoForward,
-    onStartExercise,
     togglePlayPause,
-    onRest,
-    onStartWorkout,
   } = useWorkoutTimerLogic();
 
   return (
@@ -26,12 +23,9 @@ const WorkoutTimerScreen = () => {
       workoutStatus={workoutStatus}
       onGoBack={onGoBack}
       onGoForward={onGoForward}
-      onStartExercise={onStartExercise}
       togglePlayPause={togglePlayPause}
-      onRest={onRest}
       count={count}
       progress={progress}
-      onStartWorkout={onStartWorkout}
     />
   );
 };
