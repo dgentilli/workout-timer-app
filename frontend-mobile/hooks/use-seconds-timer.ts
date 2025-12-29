@@ -22,6 +22,7 @@ export const useSecondsTimer = ({
   const timeoutRef = useRef<number | null>(null);
   const remainingTimeRef = useRef(durationInSeconds * ONE_SECOND_IN_MS);
   const prevDurationRef = useRef(durationInSeconds);
+  const isPausedRef = useRef(false);
 
   // Clear timeout on unmount
   useEffect(() => {
@@ -35,10 +36,10 @@ export const useSecondsTimer = ({
   // Handle status changes and duration changes
   useEffect(() => {
     if (status === 'active' || status === 'rest') {
-      // Reset if duration changed OR starting fresh (not resuming from pause)
+      // Reset if duration changed OR if it is not paused
       if (
         prevDurationRef.current !== durationInSeconds ||
-        startTimeRef.current === null
+        !isPausedRef.current
       ) {
         remainingTimeRef.current = durationInSeconds * ONE_SECOND_IN_MS;
         prevDurationRef.current = durationInSeconds;
@@ -77,7 +78,7 @@ export const useSecondsTimer = ({
       // Clear timeout
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
+        isPausedRef.current = true;
       }
 
       // Mark as paused so we know to resume, not restart
