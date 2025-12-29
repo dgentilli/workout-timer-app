@@ -5,9 +5,9 @@ import AuthUI from './AuthUI';
 const MemoizedAuthUI = memo(AuthUI);
 
 const AuthScreen = () => {
-  const {} = useAuthLogic();
+  const { email, setEmail } = useAuthLogic();
 
-  return <MemoizedAuthUI />;
+  return <MemoizedAuthUI email={email} setEmail={setEmail} />;
 };
 
 export default AuthScreen;

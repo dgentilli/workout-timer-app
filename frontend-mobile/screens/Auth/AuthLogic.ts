@@ -1,5 +1,9 @@
+import { useState } from 'react';
+
 const useAuthLogic = () => {
-  return {};
+  const [email, setEmail] = useState('');
+
+  return { email, setEmail };
 };
 
 export default useAuthLogic;
